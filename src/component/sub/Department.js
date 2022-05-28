@@ -2,13 +2,9 @@ import Layout from "../common/Layout"
 
 function Department() {
     return (
-        <section className="content">
-            <figure>
-                <div className="inner">
-                    <h1>Department</h1>
-                </div>
-            </figure>
-        </section>
+        <Layout name={'Department'}>
+            <h1>Department</h1>
+        </Layout>
     )
 }
 

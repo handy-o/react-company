@@ -1,15 +1,16 @@
 import Layout from "../common/Layout"
+import { useEffect } from 'react'
 
 function Community() {
+    // useEffect(() => {
+    //     console.log('mount');
+    //     return () => { console.log('unMount') }
+    // }, []);
+
     return (
-        <Layout />
-        // <section className="content">
-        //     <figure>
-        //         <div className="inner">
-        //             <h1>Community</h1>
-        //         </div>
-        //     </figure>
-        // </section>
+        <Layout name={'Community'}>
+            <h1>Community</h1>
+        </Layout>
     )
 }
 

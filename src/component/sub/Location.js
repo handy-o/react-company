@@ -2,13 +2,9 @@ import Layout from "../common/Layout"
 
 function Location() {
     return (
-        <section className="content">
-            <figure>
-                <div className="inner">
-                    <h1>Location</h1>
-                </div>
-            </figure>
-        </section>
+        <Layout name={'Location'}>
+            <h1>Location</h1>
+        </Layout>
     )
 }
 

@@ -2,13 +2,9 @@ import Layout from "../common/Layout"
 
 function Gallery() {
     return (
-        <section className="content">
-            <figure>
-                <div className="inner">
-                    <h1>Gallery</h1>
-                </div>
-            </figure>
-        </section>
+        <Layout name={'Gallery'}>
+            <h1>Gallery</h1>
+        </Layout>
     )
 }
 
