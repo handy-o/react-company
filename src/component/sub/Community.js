@@ -1,6 +1,15 @@
+import Layout from "../common/Layout"
+
 function Community() {
     return (
-        <div>Community</div>
+        <Layout />
+        // <section className="content">
+        //     <figure>
+        //         <div className="inner">
+        //             <h1>Community</h1>
+        //         </div>
+        //     </figure>
+        // </section>
     )
 }
 

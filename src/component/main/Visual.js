@@ -1,6 +1,6 @@
 function Visual() {
     return (
-        <div>Visual</div>
+        <figure id="visual">Visual</figure>
     )
 }
 

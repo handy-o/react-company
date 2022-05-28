@@ -1,6 +1,14 @@
+import Layout from "../common/Layout"
+
 function Department() {
     return (
-        <div>Department</div>
+        <section className="content">
+            <figure>
+                <div className="inner">
+                    <h1>Department</h1>
+                </div>
+            </figure>
+        </section>
     )
 }
 

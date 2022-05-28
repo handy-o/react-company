@@ -1,6 +1,14 @@
+import Layout from "../common/Layout"
+
 function Gallery() {
     return (
-        <div>Gallery</div>
+        <section className="content">
+            <figure>
+                <div className="inner">
+                    <h1>Gallery</h1>
+                </div>
+            </figure>
+        </section>
     )
 }
 
