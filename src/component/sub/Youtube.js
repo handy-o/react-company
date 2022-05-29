@@ -20,13 +20,20 @@ function Youtube() {
         <Layout name={'Youtube'}>
             {
                 vids.map((vid, idx) => {
+                    // 글자수 자르기
+                    const tit = vid.snippet.title;
+                    const desc = vid.snippet.description;
+
+                    // 구분자로 자르기
+                    const date = vid.snippet.publishedAt;
 
                     return (
                         <article key={idx}>
-                            <h2>{vid.snippet.title}</h2>
+                            <h2>{tit.length > 50 ? tit.substr(0, 30) + '...' : tit}</h2>
                             <div className="txt">
-                                <p>{vid.snippet.description}</p>
-                                <span>{vid.snippet.publishedAt}</span>
+                                <p>{desc.length > 100 ? desc.substr(0, 200) + '...' : desc}</p>
+                                <span>{date.split('T')[0]}</span>
+                                {/* T를 기점으로 배열로 자름 */}
                             </div>
                             <div className="pic">
                                 <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
