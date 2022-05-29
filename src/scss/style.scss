@@ -20,27 +20,3 @@ $mp : 539px;
 @import 'sub/join';
 @import 'sub/location';
 @import 'sub/youtube';
-
-// table 
-@media screen and (max-width: $tablet ) {
-    .content {
-        figure {
-            height: 200px;
-        }
-
-        >.inner {
-            width: 100%;
-            margin: 80px auto;
-            padding: 0 30px;
-        }
-    }
-}
-
-// mp
-@media screen and (max-width: $mp ) {
-    .content {
-        figure {
-            height: 150px;
-        }
-    }
-}
