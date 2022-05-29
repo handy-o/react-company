@@ -12,21 +12,40 @@
 
         h2 {
             width: 18%;
+            font: normal 30px/1 'open sans';
+            color: #111;
         }
 
         .txt {
             width: 38%;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
 
             p {
-                margin-bottom: 10px;
+                font: 12px/1.2 'srial';
+                color: #888;
+                filter: saturate(0)
+            }
+
+            span {
+                font: 12px/1 'orbitron';
+                letter-spacing: 1px;
+                color: rgb(39, 61, 160);
             }
         }
 
         .pic {
             width: 40%;
-            height: 250px;
+            height: 200px;
             background: #000;
             //filter: saturate(0);
+            cursor: pointer;
+            transition: 1s;
+
+            &:hover {
+                filter: saturate(1.5);
+            }
 
             img {
                 width: 100%;
