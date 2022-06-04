@@ -3,27 +3,35 @@ import { useEffect, useState } from 'react'
 import axios from "axios"; // 비동기로 정보 가져옴
 import Popup from "../common/Popup";
 
-function Youtube() {
-    const [vids, setVids] = useState([]);
-    const key = 'AIzaSyD4taSlH00Ul7_XuoRrweLcAZNS-gn080Q';
-    const playlist = 'PLcFzhbItLOvYk5e0s4C2eFiO1iiC7hw-Y';
-    const num = 5;
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
-    useEffect(() => {
+function Youtube({ current }) {
+    const [Vids, setVids] = useState([]);
+    const [Open, setOpen] = useState(false); // 팝업
+    const [Index, setIndex] = useState(0); // 유튜브 순서
+
+    const FetchYoutube = () => {
+        const key = 'AIzaSyD4taSlH00Ul7_XuoRrweLcAZNS-gn080Q';
+        const playlist = 'PLcFzhbItLOvYk5e0s4C2eFiO1iiC7hw-Y';
+        const num = 5;
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+
         axios.get(url).then((json) => {
             console.log(json.data.items);
             setVids(json.data.items)
-        })
-    }, [])
+        });
+    }
+    useEffect(FetchYoutube, [])
 
     // 팝업
-    const [open, setOpen] = useState(false);
+    const handlePopup = (index) => {
+        setOpen(true);
+        setIndex(index)
+    }
 
     return (
         <>
             <Layout name={'Youtube'}>
                 {
-                    vids.map((vid, idx) => {
+                    Vids.map((vid, idx) => {
                         // 글자수 자르기
                         const tit = vid.snippet.title;
                         const desc = vid.snippet.description;
@@ -39,7 +47,7 @@ function Youtube() {
                                     <span>{date.split('T')[0]}</span>
                                     {/* T를 기점으로 배열로 자름 */}
                                 </div>
-                                <div className="pic" onClick={() => setOpen(true)}>
+                                <div className="pic" onClick={() => handlePopup(idx)}>
                                     <img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
                                 </div>
 
@@ -49,10 +57,10 @@ function Youtube() {
                 }
             </Layout>
 
-            {/* {open ? <Popup setOpen={setOpen} /> : null} 아래와 동일 */}
-            {open && (
+            {/* {Open ? <Popup setOpen={setOpen} /> : null} 아래와 동일 */}
+            {Open && (
                 <Popup setOpen={setOpen}>
-                    <iframe src={`https://www.youtube.com/embed/${vids[0].snippet.resourceId.videoId}`} frameborder="0"></iframe>
+                    <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameborder="0"></iframe>
                 </Popup>
             )}
 
