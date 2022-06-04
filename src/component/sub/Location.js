@@ -1,16 +1,27 @@
 import Layout from "../common/Layout"
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function Location() {
-    // window 전역객체에서 kakao라는 이름의 객체를 비구조화 할당으로 직접 변수에 전달
+    const [Location, setLocation] = useState(null);
     const { kakao } = window;
     const path = process.env.PUBLIC_URL;
-    const container = useRef(null); // ㅇ등록 (지도를 담을 영역의 DOM 레퍼런스)
-    const options = { //지도를 생성할 때 필요한 기본 옵션
-        //center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+    const container = useRef(null);
+    const options = {
         center: new kakao.maps.LatLng(37.51269649256761, 127.06066306108244), //https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
-        level: 3 //지도의 레벨(확대, 축소 정도)
+        level: 3
     }
+
+    // 버튼 토글 기능으로 변경
+    const [Traffic, setTraffic] = useState(false);
+    useEffect(() => {
+        if (Location) { // 첫 로드시에 Location 값이 아직 null이므로 if문 추가
+            Traffic ?
+                Location.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
+                :
+                Location.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
+        }
+
+    }, [Traffic])
 
     useEffect(() => {
         //지도 생성 및 객체 리턴
@@ -27,8 +38,6 @@ function Location() {
             imageSrc, imageSize, imageOption
         );
 
-
-
         // 마커를 생성
         const marker = new kakao.maps.Marker({
             position: markerPosition,
@@ -37,12 +46,22 @@ function Location() {
 
         // 마커 인스턴스로부터 setMap함수 호출 (인수로 지도 인스턴스 전달)
         marker.setMap(map_instance);
+        setLocation(map_instance);
     }, []);
 
     return (
         <Layout name={'Location'}>
             <div id="map" ref={container}></div> {/* ㅇ참조 */}
-        </Layout>
+            {/* <button onClick={() => {
+                Location.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+            }}>Traffic On</button>
+            <button onClick={() => {
+                Location.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+            }}>Traffic Off</button> */}
+
+            <button onClick={() => setTraffic(!Traffic)}>
+                {Traffic ? 'Traffic OFF' : 'Traffic ON'}</button>
+        </Layout >
     )
 }
 
