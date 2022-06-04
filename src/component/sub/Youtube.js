@@ -1,6 +1,6 @@
 import Layout from "../common/Layout"
 import { useEffect, useState } from 'react'
-import axios from "axios";
+import axios from "axios"; // 비동기로 정보 가져옴
 import Popup from "../common/Popup";
 
 function Youtube() {
@@ -49,7 +49,12 @@ function Youtube() {
                 }
             </Layout>
 
-            {open ? <Popup setOpen={setOpen} /> : null}
+            {/* {open ? <Popup setOpen={setOpen} /> : null} 아래와 동일 */}
+            {open && (
+                <Popup setOpen={setOpen}>
+                    <iframe src={`https://www.youtube.com/embed/${vids[0].snippet.resourceId.videoId}`} frameborder="0"></iframe>
+                </Popup>
+            )}
 
         </>
     )
