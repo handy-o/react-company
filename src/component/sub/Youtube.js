@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from "axios"; // 비동기로 정보 가져옴
 import Popup from "../common/Popup";
 
-function Youtube({ current }) {
+function Youtube() {
     const [Vids, setVids] = useState([]);
     const [Open, setOpen] = useState(false); // 팝업
     const [Index, setIndex] = useState(0); // 유튜브 순서
