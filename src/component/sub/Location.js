@@ -52,6 +52,8 @@ function Location() {
 
 
     useEffect(() => {
+        // 지도 안쪽 내용을 지워버린 후 새롭게 로드
+        container.current.innerHTML = '';
         //지도 생성 및 객체 리턴
         const map_instance = new kakao.maps.Map(
             container.current,
@@ -75,11 +77,14 @@ function Location() {
         marker.setMap(map_instance);
         setLocation(map_instance);
 
-
         // 마커를 가운데에 위치시키기
-        window.addEventListener('resize', () => {
+        const mapCenter = () => {
+            console.log('함수호출');
             map_instance.setCenter(Info[Index].latLng);
-        })
+        }
+        window.addEventListener('resize', mapCenter);
+        return () => window.removeEventListener('resize', mapCenter);
+
     }, [Index]);
 
     useEffect(() => {
