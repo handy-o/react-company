@@ -77,6 +77,20 @@ function Location() {
         marker.setMap(map_instance);
         setLocation(map_instance);
 
+        // 스카이뷰 전환 버튼 추가
+        const mapTypeControl = new kakao.maps.MapTypeControl();
+        map_instance.addControl(
+            mapTypeControl,
+            kakao.maps.ControlPosition.TOPRIGHT
+        )
+        // 확대 축소버튼 추가
+        const zoomControl = new kakao.maps.ZoomControl();
+        map_instance.addControl(
+            zoomControl,
+            kakao.maps.ControlPosition.RIGHT
+        )
+
+
         // 마커를 가운데에 위치시키기
         const mapCenter = () => {
             console.log('함수호출');
