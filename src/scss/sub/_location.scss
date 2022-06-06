@@ -8,4 +8,33 @@
         height: 400px;
         background: #111;
     }
+
+    .btnSet {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            cursor: pointer;
+            border: 1px solid #888;
+            padding: 5px 20px;
+            height: 30px;
+            font: 14px/1 'arial';
+            color: #555;
+        }
+
+        ul {
+            display: flex;
+
+            li {
+                cursor: pointer;
+                border: 1px solid #888;
+                height: 30px;
+                padding: 5px 20px;
+                font: 14px/1 'arial';
+                color: #555;
+                margin: 0 5px;
+            }
+        }
+    }
 }
