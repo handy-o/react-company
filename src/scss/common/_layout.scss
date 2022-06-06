@@ -14,7 +14,7 @@
         position: relative;
         transform: translateY(100px);
         opacity: 0;
-        transition: 1s;
+        transition: opacity 1s, transform 1s;
 
         h1 {
             font: bold 60px/1 'work sans';

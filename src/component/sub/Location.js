@@ -45,7 +45,6 @@ function Location() {
     const [Index, setIndex] = useState(0);
 
     const container = useRef(null);
-    /*const btns = useRef(null);*/
     const options = {
         center: Info[Index].latLng,
         level: 3
@@ -76,9 +75,11 @@ function Location() {
         marker.setMap(map_instance);
         setLocation(map_instance);
 
-        // li 의 on 붙이기 
-        /* for (const btn of btns.current.children) btn.classList.remove('on'); // 초기화
-        btns.current.children[Index].classList.add('on'); */
+
+        // 마커를 가운데에 위치시키기
+        window.addEventListener('resize', () => {
+            map_instance.setCenter(Info[Index].latLng);
+        })
     }, [Index]);
 
     useEffect(() => {
@@ -100,7 +101,6 @@ function Location() {
                     {Traffic ? 'Traffic OFF' : 'Traffic ON'}
                 </button>
 
-                {/* <ul ref={btns}> */}
                 <ul>
                     {Info.map((info, idx) => {
                         let on = '';
