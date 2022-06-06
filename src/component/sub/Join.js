@@ -7,23 +7,38 @@ function Join() {
         userid: '',
     };
     const [Val, setVal] = useState(initVal);
+    const [Err, setErr] = useState({})
+
+    // 3. 인수로 전달된 값으로 인증처리해서 에러 객체 값 반환함수
+    const check = (val) => {
+        const errs = {};
+        // userid 체크 항목
+        if (val.userid.length < 5) {
+            errs.userid = '아이디를 5글자 이상 입력하세요'
+        }
+        return errs;
+    }
 
     const handleChange = (e) => {
         //console.log(e.target)
         const { name, value } = e.target;
-        console.log(name)
-        console.log(value)
-
-        // Val을 복제해서 가져와 value에 넣기
-        //객체에서 변수값을 key에 넣을 수 없음
-        // 객체에서 변수값을 key값으로 활용하려면 객체안에서 변수명을 대괄호로 묶어준다.
-        // 이것과 동일 - setVal({...Val, userid: 현재입력된 값});
         setVal({ ...Val, [name]: value });
+    }
+
+    // 인증처리
+    const handleSubmit = (e) => {
+        e.preventDefault(); // 기존의 submit 기능 막기
+
+        // 2. check함수 호출해서 val값에 담겨 있는 값을 
+        // check함수의 인수로 전달해서 err객체를 생성해서 반환
+        // 반환된 에러객체는 다시 Err state에 옮겨닮음
+        setErr(check(Val));
     }
     return (
         <Layout name={'Join'}>
 
-            <form action="">
+            {/* 1. 전송버튼을 눌러서 handleSubmit 함수 호출 */}
+            <form onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>회원가입 폼 양식</legend>
                     <table border="1">
