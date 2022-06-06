@@ -103,7 +103,16 @@ function Location() {
                 {/* <ul ref={btns}> */}
                 <ul>
                     {Info.map((info, idx) => {
-                        return <li key={idx} onClick={() => setIndex(idx)}>{info.title}</li>
+                        let on = '';
+                        idx === Index ? (on = 'on') : (on = '');
+                        return (
+                            <li
+                                className={on}
+                                key={idx}
+                                onClick={() => setIndex(idx)}>
+                                {info.title}
+                            </li>
+                        )
                     })}
                 </ul>
             </div>
