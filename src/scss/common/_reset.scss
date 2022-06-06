@@ -17,3 +17,23 @@ a {
 body {
     background: #efefef;
 }
+
+legned,
+caption {
+    position: absolute;
+    top: -99999px;
+}
+
+fieldset {
+    border: none;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+
+    th,
+    td {
+        border: none;
+    }
+}

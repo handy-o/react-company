@@ -1,10 +1,11 @@
 import Layout from "../common/Layout"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Join() {
     // 객체형태
     const initVal = {
         userid: '',
+        email: '',
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({})
@@ -15,6 +16,10 @@ function Join() {
         // userid 체크 항목
         if (val.userid.length < 5) {
             errs.userid = '아이디를 5글자 이상 입력하세요'
+        }
+        // email 체크 항목 (8글자 이하거나 @가 없으면)
+        if (val.email.length < 8 || !/@/.test(val.email)) {
+            errs.email = '이메일은 최소 8글자 이상 @를 포함해주세요'
         }
         return errs;
     }
@@ -34,6 +39,10 @@ function Join() {
         // 반환된 에러객체는 다시 Err state에 옮겨닮음
         setErr(check(Val));
     }
+
+    useEffect(() => {
+        console.log(Err);
+    }, [Err])
     return (
         <Layout name={'Join'}>
 
@@ -53,6 +62,19 @@ function Join() {
                                         placeholder="아이디를 입력하세요"
                                         // 입력한 값을 value로 
                                         value={Val.userid}
+                                        onChange={handleChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label htmlFor="email">E-MAIL</label>
+                                </th>
+                                <td>
+                                    <input type="text" id="email" name="email"
+                                        placeholder="아이디를 입력하세요"
+                                        // 입력한 값을 value로 
+                                        value={Val.email}
                                         onChange={handleChange}
                                     />
                                 </td>
