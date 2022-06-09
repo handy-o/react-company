@@ -22,20 +22,24 @@ function Join() {
 
         // userid 체크 항목
         if (val.userid.length < 5) {
-            errs.userid = '아이디를 5글자 이상 입력하세요'
+            errs.userid = '아이디를 5글자 이상 입력하세요';
+            //alert(errs.userid);
         }
         // email 체크 항목 (8글자 이하거나 @가 없으면)
         if (val.email.length < 8 || !/@/.test(val.email)) {
-            errs.email = '이메일은 최소 8글자 이상 @를 포함해주세요'
+            errs.email = '이메일은 최소 8글자 이상 @를 포함해주세요';
+            //alert(errs.email);
         }
 
         // pwd1 체크 항목 (문자열5 , 문자-숫자-특수문자 포함)
         if (val.pwd1.length < 5 || !eng.test(Val.pwd1) || !num.test(Val.pwd1) || !spc.test(Val.pwd1)) {
-            errs.pwd = '비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함하세요'
+            errs.pwd1 = '비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함하세요';
+            //alert(errs.pwd1);
         }
         // pwd2 체크항목
-        if (val.pwd1 !== val.pwd2) {
-            errs.pwd2 = '비밀번호를 동일하게 입력해주세요'
+        if (val.pwd1 !== val.pwd2 || !val.pwd2) {
+            errs.pwd2 = '비밀번호를 동일하게 입력해주세요';
+            //alert(errs.pwd2);
         }
         return errs;
     }
@@ -81,6 +85,7 @@ function Join() {
                                         value={Val.userid}
                                         onChange={handleChange}
                                     />
+                                    <span className="err">{Err.userid}</span>
                                 </td>
                             </tr>
                             {/* password */}
@@ -96,6 +101,7 @@ function Join() {
                                         value={Val.pwd1}
                                         onChange={handleChange}
                                     />
+                                    <span className="err">{Err.pwd1}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -110,6 +116,7 @@ function Join() {
                                         value={Val.pwd2}
                                         onChange={handleChange}
                                     />
+                                    <span className="err">{Err.pwd2}</span>
                                 </td>
                             </tr>
 
@@ -125,6 +132,7 @@ function Join() {
                                         value={Val.email}
                                         onChange={handleChange}
                                     />
+                                    <span className="err">{Err.email}</span>
                                 </td>
                             </tr>
                             <tr>
