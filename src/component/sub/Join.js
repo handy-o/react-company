@@ -6,6 +6,8 @@ function Join() {
     const initVal = {
         userid: '',
         email: '',
+        pwd1: '',
+        pwd2: '',
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({})
@@ -13,6 +15,11 @@ function Join() {
     // 3. 인수로 전달된 값으로 인증처리해서 에러 객체 값 반환함수
     const check = (val) => {
         const errs = {};
+        // 비밀번호 조건 문자열/숫자/특문
+        const eng = /[a-zA-Z]/;
+        const num = /[0-9]/;
+        const spc = /[!@#$%^&*()_+]/;
+
         // userid 체크 항목
         if (val.userid.length < 5) {
             errs.userid = '아이디를 5글자 이상 입력하세요'
@@ -20,6 +27,15 @@ function Join() {
         // email 체크 항목 (8글자 이하거나 @가 없으면)
         if (val.email.length < 8 || !/@/.test(val.email)) {
             errs.email = '이메일은 최소 8글자 이상 @를 포함해주세요'
+        }
+
+        // pwd1 체크 항목 (문자열5 , 문자-숫자-특수문자 포함)
+        if (val.pwd1.length < 5 || !eng.test(Val.pwd1) || !num.test(Val.pwd1) || !spc.test(Val.pwd1)) {
+            errs.pwd = '비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함하세요'
+        }
+        // pwd2 체크항목
+        if (val.pwd1 !== val.pwd2) {
+            errs.pwd2 = '비밀번호를 동일하게 입력해주세요'
         }
         return errs;
     }
@@ -53,6 +69,7 @@ function Join() {
                     <table border="1">
                         <caption>회원가입 정보입력</caption>
                         <thead>
+                            {/* user id */}
                             <tr>
                                 <th scope="row">
                                     <label htmlFor="userid">USER ID</label>
@@ -66,6 +83,37 @@ function Join() {
                                     />
                                 </td>
                             </tr>
+                            {/* password */}
+                            <tr>
+                                <th scope="row">
+                                    <label htmlFor="pwd1">PASSWORD</label>
+                                </th>
+                                <td>
+                                    <input type="password"
+                                        name="pwd1"
+                                        id="pwd1"
+                                        placeholder="비밀번호를 입력하세요"
+                                        value={Val.pwd1}
+                                        onChange={handleChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label htmlFor="pwd2">PASSWORD</label>
+                                </th>
+                                <td>
+                                    <input type="password"
+                                        name="pwd2"
+                                        id="pwd2"
+                                        placeholder="비밀번호를 재입력하세요"
+                                        value={Val.pwd2}
+                                        onChange={handleChange}
+                                    />
+                                </td>
+                            </tr>
+
+                            {/* email  */}
                             <tr>
                                 <th scope="row">
                                     <label htmlFor="email">E-MAIL</label>
