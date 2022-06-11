@@ -39,7 +39,7 @@ function Community() {
     }
 
     //3 ) 입력한 글 삭제 (배열에서 제외)
-    const deletePost = () => {
+    const deletePost = (index) => {
         console.log(index);
         setPosts(Posts.filter((_, idx) => idx !== index))
     }
@@ -58,16 +58,21 @@ function Community() {
                     placeholder='본문을 입력하세요'
                     ref={textarea}></textarea>
 
-                <button onClick={resetPost}>CANCEL</button>
-                <button onClick={createPost}>WRITE</button>
+                <div className="btnSet">
+                    <button onClick={resetPost}>CANCEL</button>
+                    <button onClick={createPost}>WRITE</button>
+                </div>
             </div>
 
             <div className="showBox">
                 {Posts.map((post, idx) => {
                     return (
                         <article key={idx}>
-                            <h2>{post.title}</h2>
-                            <p>{post.content}</p>
+                            <div className="txt">
+                                <h2>{post.title}</h2>
+                                <p>{post.content}</p>
+                            </div>
+
 
                             {/* 3) */}
                             <div className="btnSet">
