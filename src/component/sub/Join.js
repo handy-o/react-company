@@ -9,6 +9,7 @@ function Join() {
         pwd1: '',
         pwd2: '',
         gender: null, // boolean값 받아야해서 true,false
+        interest: null,
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({})
