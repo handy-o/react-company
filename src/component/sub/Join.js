@@ -1,5 +1,7 @@
 import Layout from "../common/Layout"
 import { useState, useEffect } from 'react'
+import { useHiistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Join() {
     // 객체형태
@@ -16,6 +18,9 @@ function Join() {
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({});
     const [Success, setSuccess] = useState(false); // 최종전송
+    const [Submit, setSubmit] = useState(false); // submit버튼을 눌렀을 떄 체크
+    const history = useHistory();
+
 
     // 3. 인수로 전달된 값으로 인증처리해서 에러 객체 값 반환함수
     const check = (val) => {
@@ -105,18 +110,24 @@ function Join() {
         setErr(check(Val));
     }
 
+    const handleReset = () => {
+        setSubmit(false);
+        setErr({});
+        setVal(initVal);
+    }
+
     useEffect(() => {
         //console.log(Err);
         //console.log(Object.keys(Err).length);
         const len = Object.keys(Err).length;
 
         //len === 0 ? setSuccess(true) : setSuccess(false);
-        if (len === 0) {
-            setSuccess(true);
-            console.log('인증통과')
+        if (len === 0 && Submit) {
+            setSuccess(true); //('인증통과')
+            history.push('/');
+            window.scroll(0, 0)
         } else {
-            setSuccess(false);
-            console.log('인증실패')
+            setSuccess(false); //('인증실패')
         }
     }, [Err])
     return (
@@ -261,8 +272,12 @@ function Join() {
                             {/* btns  */}
                             <tr>
                                 <th colSpan="2">
-                                    <input type="reset" value="CANCEL" />
-                                    <input type="submit" value="SUBMIT" />
+                                    <input type="reset" value="CANCEL"
+                                        //onClick={() => setVal(initVal)} 
+                                        onClick={handleReset}
+                                    />
+                                    <input type="submit" value="SUBMIT"
+                                        conClick={() => setSubmit(true)} />
                                 </th>
                             </tr>
 
