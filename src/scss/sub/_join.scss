@@ -37,6 +37,15 @@
             width: 40%;
         }
 
+        label {
+            margin-right: 4px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 30px;
+        }
+
         .err {
             font: 11px/1 '맑은 고딕';
             color: hotpink;

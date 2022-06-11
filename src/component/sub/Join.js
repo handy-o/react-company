@@ -8,6 +8,7 @@ function Join() {
         email: '',
         pwd1: '',
         pwd2: '',
+        gender: null, // boolean값 받아야해서 true,false
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({})
@@ -41,6 +42,10 @@ function Join() {
             errs.pwd2 = '비밀번호를 동일하게 입력해주세요';
             //alert(errs.pwd2);
         }
+        // 성별체크
+        if (!Val.gender) {
+            errs.gender = '성별을 선택하세요';
+        }
         return errs;
     }
 
@@ -48,6 +53,12 @@ function Join() {
         //console.log(e.target)
         const { name, value } = e.target;
         setVal({ ...Val, [name]: value });
+    }
+
+    const handleRadio = e => {
+        const { name } = e.target; // 비구조할당으로 e.target의 name값
+        const isCheck = e.tartget.checked; // true, false
+        setVal({ ...Val, [name]: isCheck })
     }
 
     // 인증처리
@@ -106,7 +117,7 @@ function Join() {
                             </tr>
                             <tr>
                                 <th scope="row">
-                                    <label htmlFor="pwd2">PASSWORD</label>
+                                    <label htmlFor="pwd2">2 PASSWORD</label>
                                 </th>
                                 <td>
                                     <input type="password"
@@ -135,12 +146,30 @@ function Join() {
                                     <span className="err">{Err.email}</span>
                                 </td>
                             </tr>
+
+                            {/* gedner */}
+                            <tr>
+                                <th scope="row">
+                                    GENDER
+                                </th>
+                                <td>
+                                    <label htmlFor="male">Male</label>
+                                    <input type="radio" id="male" name="gender" onChange={handleRadio} />
+                                    <label htmlFor="female">Female</label>
+                                    <input type="radio" id="female" name="gender" onChange={handleRadio} />
+                                    <span className="err">{Err.gender}</span>
+                                </td>
+                            </tr>
+
+
+                            {/* btns  */}
                             <tr>
                                 <th colSpan="2">
                                     <input type="reset" value="CANCEL" />
                                     <input type="submit" value="SUBMIT" />
                                 </th>
                             </tr>
+
                         </thead>
 
                     </table>
