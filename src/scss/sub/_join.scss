@@ -77,3 +77,59 @@
 
     }
 }
+
+@media screen and (max-width: $tablet) {
+    .Join {
+        table {
+
+            input[tyep="text"],
+            input[type="password"],
+            select,
+            textarea {
+                width: 80%;
+            }
+
+            .err {
+                display: block;
+                margin-top: 10px;
+                margin-left: 0;
+            }
+
+        }
+    }
+}
+
+@media screen and (max-width: $mp) {
+    .Join {
+        table {
+            th {
+                display: none;
+
+                &:last-child {
+                    display: flex;
+                    padding-left: 0;
+                    width: 100%;
+                    justify-content: space-between;
+
+                    input[type=submit],
+                    input[type=reset] {
+                        width: 48%;
+                        margin: 0;
+                    }
+                }
+            }
+
+            td {
+                padding-left: 0;
+                border-left: none;
+            }
+
+            input[tyep="text"],
+            input[type="password"],
+            select,
+            textarea {
+                width: 100%;
+            }
+        }
+    }
+}
