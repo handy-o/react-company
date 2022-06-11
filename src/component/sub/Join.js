@@ -11,9 +11,11 @@ function Join() {
         gender: null, // boolean값 받아야해서 true,false
         interest: null,
         edu: '',
+        comments: '',
     };
     const [Val, setVal] = useState(initVal);
-    const [Err, setErr] = useState({})
+    const [Err, setErr] = useState({});
+    const [Success, setSuccess] = useState(false); // 최종전송
 
     // 3. 인수로 전달된 값으로 인증처리해서 에러 객체 값 반환함수
     const check = (val) => {
@@ -55,6 +57,10 @@ function Join() {
         // 학력 체크
         if (Val.edu == '') { // 빈문자열이면
             errs.edu = '최종학력을 선택하세요';
+        }
+        // 코멘트 체크
+        if (Val.comments.length < 20) {
+            errs.comments = '남기는 말은 20글자 이상 입력하세요';
         }
 
         return errs;
@@ -100,7 +106,18 @@ function Join() {
     }
 
     useEffect(() => {
-        console.log(Err);
+        //console.log(Err);
+        //console.log(Object.keys(Err).length);
+        const len = Object.keys(Err).length;
+
+        //len === 0 ? setSuccess(true) : setSuccess(false);
+        if (len === 0) {
+            setSuccess(true);
+            console.log('인증통과')
+        } else {
+            setSuccess(false);
+            console.log('인증실패')
+        }
     }, [Err])
     return (
         <Layout name={'Join'}>
@@ -222,6 +239,22 @@ function Join() {
                                         <option value="college">대학교 졸업</option>
                                     </select>
                                     <span className="err">{Err.edu}</span>
+                                </td>
+                            </tr>
+
+                            {/* comments */}
+                            <tr>
+                                <th scope="row">
+                                    <label htmlFor="comments">COMMENTS</label>
+                                </th>
+                                <td>
+                                    <textarea name="comments" id="comments"
+                                        cols="30" rows="5"
+                                        placeholder="남기는 말을 입력하세요."
+                                        onChange={handleChange}>
+
+                                    </textarea>
+                                    <span className="err">{Err.comments}</span>
                                 </td>
                             </tr>
 
