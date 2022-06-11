@@ -46,6 +46,11 @@ function Join() {
         if (!Val.gender) {
             errs.gender = '성별을 선택하세요';
         }
+        //취미 체크
+        if (!Val.interest) {
+            errs.interest = '관심사를 하나이상 선택하세요';
+        }
+
         return errs;
     }
 
@@ -59,6 +64,19 @@ function Join() {
         const { name } = e.target; // 비구조할당으로 e.target의 name값
         const isCheck = e.tartget.checked; // true, false
         setVal({ ...Val, [name]: isCheck })
+    }
+
+    const handleCheck = e => {
+        let isCheck = false; // 다중 체크가 되기 때문에 값을 바꿔야해서 재할당이 일어나서 let
+        const { name } = e.target;
+        const inputs = e.target.parentElement.querySelectorAll('input'); // 체크박스 모두 선택
+
+        inputs.forEach(el => {
+            if (el.checked) isCheck = true; // 하나라도 체크하면 체크
+        })
+
+        setVal({ ...Val, [name]: isCheck });
+
     }
 
     // 인증처리
@@ -161,6 +179,24 @@ function Join() {
                                 </td>
                             </tr>
 
+                            {/* interests   */}
+                            <tr>
+                                <th scope="row">INTEREST</th>
+                                <td>
+                                    <label htmlFor="sports">Sports</label>
+                                    <input type="checkbox" id="sports" name="interest"
+                                        onChange={handleCheck} />
+
+                                    <label htmlFor="game">game</label>
+                                    <input type="checkbox" id="game" name="interest"
+                                        onChange={handleCheck} />
+
+                                    <label htmlFor="music">music</label>
+                                    <input type="checkbox" id="music" name="interest"
+                                        onChange={handleCheck} />
+                                    <span className="err">{Err.interest}</span>
+                                </td>
+                            </tr>
 
                             {/* btns  */}
                             <tr>
