@@ -10,6 +10,7 @@ function Join() {
         pwd2: '',
         gender: null, // boolean값 받아야해서 true,false
         interest: null,
+        edu: '',
     };
     const [Val, setVal] = useState(initVal);
     const [Err, setErr] = useState({})
@@ -51,6 +52,10 @@ function Join() {
         if (!Val.interest) {
             errs.interest = '관심사를 하나이상 선택하세요';
         }
+        // 학력 체크
+        if (Val.edu == '') { // 빈문자열이면
+            errs.edu = '최종학력을 선택하세요';
+        }
 
         return errs;
     }
@@ -75,9 +80,13 @@ function Join() {
         inputs.forEach(el => {
             if (el.checked) isCheck = true; // 하나라도 체크하면 체크
         })
-
         setVal({ ...Val, [name]: isCheck });
+    }
 
+    const handleSelect = e => {
+        const { name, value } = e.target;
+        //const isSelected = e.target.options[e.target.selectedIndex].value; 
+        setVal({ ...Val, [name]: value });
     }
 
     // 인증처리
@@ -196,6 +205,23 @@ function Join() {
                                     <input type="checkbox" id="music" name="interest"
                                         onChange={handleCheck} />
                                     <span className="err">{Err.interest}</span>
+                                </td>
+                            </tr>
+
+                            {/* edu  */}
+                            <tr>
+                                <th scope="row">
+                                    <label htmlFor="edu">Education</label>
+                                </th>
+                                <td>
+                                    <select name="edu" id="edu" onChange={handleSelect}>
+                                        <option value="">학력을 선택하세요</option>
+                                        <option value="elementary-school">초등학교 졸업</option>
+                                        <option value="midde-school">중학교 졸업</option>
+                                        <option value="high-school">고등학교 졸업</option>
+                                        <option value="college">대학교 졸업</option>
+                                    </select>
+                                    <span className="err">{Err.edu}</span>
                                 </td>
                             </tr>
 

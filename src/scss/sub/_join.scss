@@ -22,7 +22,7 @@
                 input[type="submit"],
                 input[type="reset"] {
                     width: 150px;
-                    height: 30px;
+                    height: 36px;
                     border: none;
                     background: #333;
                     display: inline-flex;
@@ -52,6 +52,7 @@
 
         input[tyep="text"],
         input[type="password"],
+        select,
         textarea {
             border: 1px solid #aaa;
             padding: 8px 10px;
