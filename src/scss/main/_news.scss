@@ -40,8 +40,12 @@
 
 @media screen and (max-width: $mp) {
     #news {
+        padding: 0px 30px;
+        justify-content: space-between;
+
         article {
             width: 100%;
+            margin: 0px;
         }
     }
 }
