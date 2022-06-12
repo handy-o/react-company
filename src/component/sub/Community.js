@@ -9,7 +9,6 @@ function Community() {
     const inputEdit = useRef(null);
     const textareaEdit = useRef(null);
 
-    //2)
     const dummyPosts = [
         { title: 'Hello5', content: 'Hero comes description in detail' },
         { title: 'Hello4', content: 'Hero comes description in detail' },
@@ -18,14 +17,19 @@ function Community() {
         { title: 'Hello1', content: 'Hero comes description in detail' },
     ]
     const [Posts, setPosts] = useState(dummyPosts);
+    // 중복 수정 모드 방지
+    const [Allowed, setAllowed] = useState(true);
 
     const resetPost = () => {
         // 빈값으로
         input.current.value = '';
         textarea.current.value = '';
         // 수정중에 빈칸으로
-        inputEdit.current.value = '';
-        textareaEdit.current.value = '';
+        if (inputEdit.current) { // 수정누르기 전에 그냥 'Write' 버튼 클릭시에 resetPost가 실행되어 생기는 에러 방지
+            inputEdit.current.value = '';
+            textareaEdit.current.value = '';
+        }
+
     }
 
     const createPost = () => {
@@ -52,6 +56,8 @@ function Community() {
 
     // 수정가능 모드로 변경시켜주는 함수
     const enableUpdate = index => {
+        if (!Allowed) return;
+        setAllowed(false);
         setPosts(
             Posts.map((post, idx) => {
                 if (idx == index) post.enableUpdate = true;
@@ -61,6 +67,7 @@ function Community() {
     }
     // 게시글을 다시 출력모드로 변경
     const disableUpdate = index => {
+        setAllowed(true);
         setPosts(
             Posts.map((post, idx) => {
                 if (idx == index) post.enableUpdate = false;
@@ -69,7 +76,7 @@ function Community() {
         )
     }
 
-    // 
+    // 수정한 글 저장
     const updatePost = index => {
         if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
             resetPost();
