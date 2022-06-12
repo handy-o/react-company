@@ -94,3 +94,57 @@
 
 
 }
+
+@media screen and(max-width: $tablet) {
+    .Community {
+
+        >.inner {
+            .inputBox {
+
+                input[type=text],
+                textarea {
+                    width: 100%;
+                }
+
+                .btnSet {
+                    display: flex;
+                    justify-content: space-between;
+
+                    button {
+                        width: 48%;
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            .showBox {
+
+                article {
+
+                    .txt {
+                        width: 100%;
+
+                        input,
+                        textarea {
+                            width: 100%;
+                        }
+
+                    }
+
+                    .btnSet {
+                        width: 100%;
+                        justify-content: space-between;
+                        margin-top: 40px;
+
+                        button {
+                            margin-left: 0;
+                            width: 48%;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+}
