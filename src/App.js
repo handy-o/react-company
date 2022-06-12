@@ -4,7 +4,7 @@ import Footer from './component/common/Footer';
 
 //main
 import Visual from './component/main/Visual';
-import Content from './component/main/Content';
+import News from './component/main/News';
 
 //sub
 import Department from './component/sub/Department';
@@ -28,7 +28,7 @@ function App() {
 				<Route exact path="/">	{/* exact 쓰지 않으면 다른 경로에서 모두 '/' 를 포함하기 때문에 아래 컴포넌트들이 모두 화면에 표시됨 */}
 					<Header type={'main'} />
 					<Visual />
-					<Content />
+					<News />
 				</Route>
 
 				<Route path="/" render={() => <Header type={'sub'} />} />
