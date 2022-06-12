@@ -40,11 +40,33 @@ function Community() {
 
     //3 ) 입력한 글 삭제 (배열에서 제외)
     const deletePost = (index) => {
-        console.log(index);
+        if (!window.confirm('정말 삭제하시겠습니까?')) return;
         setPosts(Posts.filter((_, idx) => idx !== index))
     }
 
+    // 수정가능 모드로 변경시켜주는 함수
+    const enableUpdate = index => {
+        setPosts(
+            Posts.map((post, idx) => {
+                if (idx == index) post.enableUpdate = true;
+                return post;
+            })
+        )
+    }
+    // 게시글을 다시 출력모드로 변경
+    const disableUpdate = index => {
+        setPosts(
+            Posts.map((post, idx) => {
+                if (idx == index) post.enableUpdate = false;
+                return post;
+            })
+        )
+    }
+
+
+
     useEffect(() => {
+
         console.log(Posts)
     }, [Posts])
 
@@ -68,17 +90,36 @@ function Community() {
                 {Posts.map((post, idx) => {
                     return (
                         <article key={idx}>
-                            <div className="txt">
-                                <h2>{post.title}</h2>
-                                <p>{post.content}</p>
-                            </div>
+                            {/*  분기처리  */}
+                            {post.enableUpdate ?
+                                // 수정모드 UI
+                                (
+                                    <>
+                                        <div className="txt">
+                                            <input type="text" defaultValue={post.title} />
+                                            <textarea cols="30" rows="5" defaultValue={post.content}></textarea>
+                                        </div>
+                                        <div className="btnSet">
+                                            <button onClick={() => disableUpdate(idx)}>CANCEL</button>
+                                            <button onClick={() => deletePost(idx)}>SAVE</button>
+                                        </div>
+                                    </>
+                                )
+                                // 출력모드 UI
+                                : (
+                                    <>
+                                        <div className="txt">
+                                            <h2>{post.title}</h2>
+                                            <p>{post.content}</p>
+                                        </div>
+                                        <div className="btnSet">
+                                            <button onClick={() => enableUpdate(idx)}>EDIT</button>
+                                            <button onClick={() => deletePost(idx)}>DELETE</button>
+                                        </div>
+                                    </>
+                                )
+                            }
 
-
-                            {/* 3) */}
-                            <div className="btnSet">
-                                <button>EDIT</button>
-                                <button onClick={() => deletePost(idx)}>DELETE</button>
-                            </div>
                         </article>
                     )
                 })}
