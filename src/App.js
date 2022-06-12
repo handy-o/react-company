@@ -3,8 +3,8 @@ import Header from './component/common/Header';
 import Footer from './component/common/Footer';
 
 //main
-import Visual from './component/main/Visual';
-import News from './component/main/News';
+import Main from './component/main/Main';
+
 
 //sub
 import Department from './component/sub/Department';
@@ -13,7 +13,6 @@ import Gallery from './component/sub/Gallery';
 import Youtube from './component/sub/Youtube';
 import Location from './component/sub/Location';
 import Join from './component/sub/Join';
-
 
 import { Route, Switch } from 'react-router-dom'
 
@@ -25,11 +24,7 @@ function App() {
 	return (
 		<>
 			<Switch>
-				<Route exact path="/">	{/* exact 쓰지 않으면 다른 경로에서 모두 '/' 를 포함하기 때문에 아래 컴포넌트들이 모두 화면에 표시됨 */}
-					<Header type={'main'} />
-					<Visual />
-					<News />
-				</Route>
+				<Route exact path="/" component={Main} />	{/* exact 쓰지 않으면 다른 경로에서 모두 '/' 를 포함하기 때문에 아래 컴포넌트들이 모두 화면에 표시됨 */}
 
 				<Route path="/" render={() => <Header type={'sub'} />} />
 			</Switch>
