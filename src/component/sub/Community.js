@@ -9,13 +9,6 @@ function Community() {
     const inputEdit = useRef(null);
     const textareaEdit = useRef(null);
 
-    const dummyPosts = [
-        { title: 'Hello5', content: 'Hero comes description in detail' },
-        { title: 'Hello4', content: 'Hero comes description in detail' },
-        { title: 'Hello3', content: 'Hero comes description in detail' },
-        { title: 'Hello2', content: 'Hero comes description in detail' },
-        { title: 'Hello1', content: 'Hero comes description in detail' },
-    ]
     // 로컬데이터
     const getLocalData = () => {
         const data = localStorage.getItem('post');
@@ -53,7 +46,7 @@ function Community() {
         resetPost();
     }
 
-    //3 ) 입력한 글 삭제 (배열에서 제외)
+    // 입력한 글 삭제 (배열에서 제외)
     const deletePost = (index) => {
         if (!window.confirm('정말 삭제하시겠습니까?')) return;
         setPosts(Posts.filter((_, idx) => idx !== index))
@@ -100,10 +93,6 @@ function Community() {
             })
         )
     }
-
-
-
-
 
     useEffect(() => {
         console.log(Posts)
