@@ -16,7 +16,12 @@ function Community() {
         { title: 'Hello2', content: 'Hero comes description in detail' },
         { title: 'Hello1', content: 'Hero comes description in detail' },
     ]
-    const [Posts, setPosts] = useState(dummyPosts);
+    // 로컬데이터
+    const getLocalData = () => {
+        const data = localStorage.getItem('post');
+        return JSON.parse(data); // 문자열 된것을 다시 JSON 데이터화
+    }
+    const [Posts, setPosts] = useState(getLocalData());
     // 중복 수정 모드 방지
     const [Allowed, setAllowed] = useState(true);
 
@@ -99,8 +104,11 @@ function Community() {
 
 
     useEffect(() => {
-
         console.log(Posts)
+
+        // 로컬 저장소
+        localStorage.setItem('post', JSON.stringify(Posts))
+        // Posts state에 있는 값을 문자화해서 post라는 이름으로 저장하겠다.
     }, [Posts])
 
     return (
