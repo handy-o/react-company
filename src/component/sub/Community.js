@@ -59,8 +59,28 @@ function Community() {
         setPosts(Posts.filter((_, idx) => idx !== index))
     }
 
+    // 수정한 글 저장
+    const updatePost = (index) => {
+        if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
+            resetPost();
+            return alert('수정할 제목과 본문을 모두 입력하세요.');
+        }
+
+        setPosts(
+            Posts.map((post, idx) => {
+                if (idx == index) {
+                    post.title = inputEdit.current.value;
+                    post.content = textareaEdit.current.value;
+                    post.enableUpdate = false;
+                }
+                return post;
+            })
+        )
+        setAllowed(true); // << 두번째 수정할떄 안되어서 추가한 함수
+    }
+
     // 수정가능 모드로 변경시켜주는 함수
-    const enableUpdate = index => {
+    const enableUpdate = (index) => {
         if (!Allowed) return;
         setAllowed(false);
         setPosts(
@@ -81,25 +101,7 @@ function Community() {
         )
     }
 
-    // 수정한 글 저장
-    const updatePost = index => {
-        if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
-            resetPost();
-            return alert('수정할 제목과 본문을 모두 입력하세요.');
-        }
 
-        setPosts(
-            Posts.map((post, idx) => {
-                if (idx == index) {
-                    post.title = inputEdit.current.value;
-                    post.content = textareaEdit.current.value;
-                    post.enableUpdate = false;
-                }
-                return post;
-            })
-
-        )
-    }
 
 
 
