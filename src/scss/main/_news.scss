@@ -7,6 +7,7 @@
     align-items: center;
     //align-content: center;
     font-size: 10vw;
+    perspective: 600px;
 
     article {
         width: 15%;
@@ -14,6 +15,17 @@
         border: 1px solid #888;
         padding: 20px;
         margin: 10px;
+        transform: translateY(100px) rotateY(180deg);
+        opacity: 0;
+        transition-duration: 0.5s;
+
+        @for $i from 0 to 4 {
+
+            // 숫자 포함 to 숫자포함하지 않음 (0부터3까지)
+            &:nth-of-type(#{$i+1}) {
+                transition-delay: 0.2s * $i;
+            }
+        }
 
         h2 {
             font: 16px/1 'arial';
@@ -23,6 +35,13 @@
 
         p {
             font: 12px/1.2 'arial';
+        }
+    }
+
+    &.on {
+        article {
+            opacity: 1;
+            transform: translateY(0) rotateY(0);
         }
     }
 }

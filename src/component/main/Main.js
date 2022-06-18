@@ -13,10 +13,11 @@ function Main() {
     const main = useRef(null);
     const pos = useRef([]);
     const [Index, setIndex] = useState(0);
+    let secs = null;
 
     const getPos = () => {
         pos.current = [];
-        const secs = main.current.querySelectorAll('.myScroll');
+        secs = main.current.querySelectorAll('.myScroll');
 
         for (const sec of secs) pos.current.push(sec.offsetTop);
         //window.scroll(0, pos.current[Index]);
@@ -31,7 +32,9 @@ function Main() {
         pos.current.map((pos, idx) => {
             if (scroll >= pos + base) {
                 for (const btn of btns) btn.classList.remove('on');
+                for (const sec of secs) sec.classList.remove('on');
                 btns[idx].classList.add('on');
+                secs[idx].classList.add('on');
             }
         })
     }
