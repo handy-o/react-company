@@ -25,10 +25,11 @@ function Main() {
 
     const activation = () => {
         const scroll = window.scrollY;
-        const btns = main.current.querySelectorAll('scroll_navi li');
+        const btns = main.current.querySelectorAll('.scroll_navi li');
+        const base = -(window.innerHeight * 0.3);
 
         pos.current.map((pos, idx) => {
-            if (scroll >= pos) {
+            if (scroll >= pos + base) {
                 for (const btn of btns) btn.classList.remove('on');
                 btns[idx].classList.add('on');
             }
@@ -37,6 +38,7 @@ function Main() {
 
     useEffect(() => {
         getPos();
+        activation();
 
         window.addEventListener('resize', getPos);
         window.addEventListener('scroll', activation);
