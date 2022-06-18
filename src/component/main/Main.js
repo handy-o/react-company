@@ -15,7 +15,7 @@ function Main() {
     const [Index, setIndex] = useState(0);
     const [Scrolled, setScrolled] = useState(0);
     let secs = null;
-    let base = null;
+    const base = -(window.innerHeight * 0.4);
 
     const getPos = () => {
         pos.current = [];
@@ -29,7 +29,7 @@ function Main() {
     const activation = () => {
         const scroll = window.scrollY;
         const btns = main.current.querySelectorAll('.scroll_navi li');
-        base = -(window.innerHeight * 0.4);
+
         //base = 0;
 
         setScrolled(scroll);
