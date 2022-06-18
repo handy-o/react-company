@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
 import Header from '../common/Header'
 import News from './News'
 import Pics from './Pics'
 import Vids from './Vids'
 import Visual from './Visual'
 import Btns from './Btns'
+import Anime from '../../asset/anim.js';
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 
 function Main() {
@@ -17,8 +17,10 @@ function Main() {
     const getPos = () => {
         pos.current = [];
         const secs = main.current.querySelectorAll('.myScroll');
+
         for (const sec of secs) pos.current.push(sec.offsetTop);
-        console.log(pos.current);
+        //window.scroll(0, pos.current[Index]);
+        //console.log(pos.current);
     }
 
     useEffect(() => {
@@ -27,10 +29,9 @@ function Main() {
         window.addEventListener('resize', getPos);
         return () => window.removeEventListener('resize', getPos);
 
-    });
+    }, []);
 
     useEffect(() => {
-        console.log(Index);
         new Anime(window, {
             prop: 'scroll',
             value: pos.current[Index],
@@ -45,7 +46,7 @@ function Main() {
             <News />
             <Pics />
             <Vids />
-            <Btns />
+            <Btns setIndex={setIndex} />
         </main>
     )
 }

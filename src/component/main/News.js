@@ -31,7 +31,7 @@ function News() {
     }, [])
 
     return (
-        <section id="news">
+        <section id="news" className='myScroll'>
             {Posts.map((post, idx) => {
                 if (idx < 4) {
                     return (

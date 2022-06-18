@@ -1,6 +1,6 @@
 function Vids() {
     return (
-        <section id="vids">Vids</section>
+        <section id="vids" className="myScroll">Vids</section>
     )
 }
 
