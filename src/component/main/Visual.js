@@ -12,7 +12,7 @@ function Visual() {
         left: 100,
     }
     return (
-        <figure id="visual">
+        <figure id="visual" className="myScroll">
             <div
                 ref={box}
                 className="box"

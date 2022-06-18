@@ -69,7 +69,7 @@ function Community() {
                 return post;
             })
         )
-        setAllowed(true); // << 두번째 수정할떄 안되어서 추가한 함수
+        setAllowed(true); // << 두번째 수정할떄 안되어서 추가
     }
 
     // 수정가능 모드로 변경시켜주는 함수
