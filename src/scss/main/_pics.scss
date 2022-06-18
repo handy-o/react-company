@@ -7,4 +7,15 @@
     align-items: center;
     font-size: 10vw;
     color: #fff;
+
+    position: relative;
+    overflow: hidden;
+
+    p {
+        font: bold 200px/1 'arial';
+        color: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 100px;
+        left: 0;
+    }
 }
