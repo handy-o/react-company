@@ -5,14 +5,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 10vw;
+    //font-size: 10vw;
     color: #fff;
-    padding: 200px 0;
+    padding: 0;
+
 
     .swiper {
+        padding: 200px 0;
         height: 100%;
+        //overflow-y: visible;
 
         .swiper-slide {
+
             width: 100%;
             // background: lightsalmon;
             // display: flex;
@@ -42,6 +46,14 @@
                     transform: scale(1);
                 }
             }
+        }
+
+        .swiper-pagination {
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+
         }
     }
 }
