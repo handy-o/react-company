@@ -8,7 +8,13 @@ function Header(props) {
     return (
         <header className={props.type}>
             <div className="inner">
-                <h1><NavLink activeStyle={active} to='/'>Logo</NavLink></h1>
+                <h1>
+                    <NavLink
+                        activeStyle={props.type === 'main' ? active2 : active}
+                        to='/'>
+                        LOGO
+                    </NavLink>
+                </h1>
 
                 <ul id="gnb">
                     <li>
