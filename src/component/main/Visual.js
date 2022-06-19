@@ -42,7 +42,7 @@ function Visual() {
             duration: 500,
             callback: () => {
                 el.classList.remove('on');
-                el.style.diplay = 'none';
+                el.style.display = 'none';
             },
         });
 
@@ -59,6 +59,19 @@ function Visual() {
             },
         });
     };
+
+
+    // li
+    const showNavi = index => {
+        panel_li = panel.current.children;
+        len = panel_li.length;
+        const target_index = index;
+        const currentEl = panel.current.querySelector('.on');
+        const current_index = Array.from(panel_li).indexOf(currentEl);
+
+        if (target_index > current_index) showSlide(currentEl, target_index, 1)
+        if (target_index < current_index) showSlide(currentEl, target_index, -1)
+    }
 
     return (
         <figure id='visual' className='myScroll'>
@@ -82,11 +95,9 @@ function Visual() {
                 </ul>
 
                 <ul className='navi'>
-                    <li className='on'></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    {[0, 1, 2, 3, 4].map(num => {
+                        return <li key={num} onClick={() => showNavi(num)}></li>
+                    })}
                 </ul>
 
                 <button className='prev' onClick={showPrev}></button>
