@@ -16,12 +16,30 @@ function Vids() {
                 slidesPerView={3} // 한번에 보여지는 슬라이드 개수
                 centeredSlides={true} // 센터모드
             >
-                <SwiperSlide>1</SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">1</div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">2</div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">3</div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">4</div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">5</div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="inner">6</div>
+                </SwiperSlide>
+                {/* <SwiperSlide>1</SwiperSlide>
                 <SwiperSlide>2</SwiperSlide>
                 <SwiperSlide>3</SwiperSlide>
                 <SwiperSlide>4</SwiperSlide>
                 <SwiperSlide>5</SwiperSlide>
-                <SwiperSlide>6</SwiperSlide>
+                <SwiperSlide>6</SwiperSlide> */}
             </Swiper>
 
         </section>
