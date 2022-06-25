@@ -48,12 +48,42 @@
             }
         }
 
+        .swiper-button-prev {
+            left: auto;
+            top: auto;
+            bottom: 4vh;
+            right: calc(5vw + 50px);
+            transform: scale(0.5);
+            filter: brightness(4) saturate(0);
+        }
+
+        .swiper-button-next {
+            top: auto;
+            bottom: 4vh;
+            right: 5vw;
+            transform: scale(0.5);
+            filter: brightness(4) saturate(0);
+        }
+
         .swiper-pagination {
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             width: auto;
 
+            .swiper-pagination-bullet {
+                background: #fff;
+                opacity: 0.7;
+                border-radius: 4px;
+                ;
+                transition: width 0.5s;
+            }
+
+            .swiper-pagination-bullet-active {
+                width: 100px;
+                opacity: 1;
+                background: aqua;
+            }
         }
     }
 }

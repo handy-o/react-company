@@ -66,7 +66,7 @@ function Visual() {
             duration: 500,
             callback: () => {
                 el.classList.remove('on');
-                el.style.diplay = 'none';
+                el.style.display = 'none';
             },
         });
 

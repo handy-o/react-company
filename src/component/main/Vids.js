@@ -15,7 +15,16 @@ function Vids() {
                 spaceBetween={50} // 슬라이드 간 간격
                 slidesPerView={3} // 한번에 보여지는 슬라이드 개수
                 centeredSlides={true} // 센터모드
-            >
+                breakpoints={{
+                    500: {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                    },
+                    1180: {
+                        slidesPerView: 3,
+                        spaceBetween: 50,
+                    },
+                }}>
                 <SwiperSlide>
                     <div className="inner">1</div>
                 </SwiperSlide>
