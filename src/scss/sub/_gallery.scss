@@ -1,9 +1,17 @@
 .Gallery {
+    .loading {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
     figure {
         background: lightskyblue;
     }
 
-    >div {
+    article {
         transform: translateY(100px);
         opacity: 0;
         transition: 1s;

@@ -13,6 +13,7 @@ function Gallery() {
     const url_search = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${num}&tags=ocean&format=json&nojsoncallback=1`;
     const frame = useRef(null);
     const [Items, setItems] = useState([]);
+    const [Loading, setLoading] = useState(true);
     const masonryOption = {
         transitionDuration: '0.5s',
 
@@ -23,7 +24,11 @@ function Gallery() {
             console.log(json.data.photos.photo);
             setItems(json.data.photos.photo)
         })
-        frame.current.classList.add('on')
+        setTimeout(() => {
+            frame.current.classList.add('on');
+            setLoading(false);
+        }, 1000)
+
     }
     useEffect(() => {
         getFlickr(url_search)
@@ -33,14 +38,21 @@ function Gallery() {
     return (
         <Layout name={'Gallery'}>
             <button onClick={() => {
+                setLoading(true);
                 frame.current.classList.remove('on');
                 getFlickr(url_interest)
             }}>Interest Gallery</button>
             <button onClick={() => {
+                setLoading(true);
                 frame.current.classList.remove('on');
                 getFlickr(url_search)
             }}>Search Gallery</button>
-            <div ref={frame}>
+
+            {
+                Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />
+            }
+
+            <article ref={frame}>
                 <Masonry elementType={'ul'} options={masonryOption}>
                     {Items.map((item) => {
                         return (
@@ -56,7 +68,7 @@ function Gallery() {
                         )
                     })}
                 </Masonry>
-            </div>
+            </article>
 
         </Layout>
     )
