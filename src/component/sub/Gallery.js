@@ -3,7 +3,7 @@ import Layout from "../common/Layout"
 import { useEffect, useState } from 'react'
 
 function Gallery() {
-    const key = '4612601b324a2fe5a1f5f7402bf8d87a';
+    const key = '418715e184dbd270f5ea19ff1fa3672f';
     const method_interest = 'flickr.interestingness.getList';
     const num = 50;
 
@@ -21,7 +21,21 @@ function Gallery() {
     // per.page  몇개
     return (
         <Layout name={'Gallery'}>
-            <h1>Gallery</h1>
+            <ul>
+                {Items.map((item) => {
+                    return (
+                        <li key={item.id}>
+                            <div className="inner">
+                                <div className="pic">
+                                    <img src={`https://live.staticflickr.com/${item.server
+                                        }/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
+                                </div>
+                                <h2>{item.title}</h2>
+                            </div>
+                        </li>
+                    )
+                })}
+            </ul>
         </Layout>
     )
 }
