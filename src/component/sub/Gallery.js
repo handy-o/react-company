@@ -4,23 +4,26 @@ import { useEffect, useState, useRef } from 'react'
 import Masonry from 'react-masonry-component'
 
 function Gallery() {
-    const key = '418715e184dbd270f5ea19ff1fa3672f';
-    const method_interest = 'flickr.interestingness.getList';
-    const method_search = 'flickr.photos.search'
-    const num = 50;
-    //https://www.flickr.com/services/api/request.rest.html
-    const url_interest = `https://www.flickr.com/services/rest/?method=${method_interest}&api_key=${key}&per_page=${num}&format=json&nojsoncallback=1`;
-    const url_search = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${num}&tags=ocean&format=json&nojsoncallback=1`;
     const frame = useRef(null);
     const [Items, setItems] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [EnableClick, setEnableClick] = useState(false)
     const masonryOption = {
         transitionDuration: '0.5s',
-
     }
 
-    const getFlickr = async (url) => {
+    const getFlickr = async (opt) => {
+        const key = '418715e184dbd270f5ea19ff1fa3672f';
+        const method_interest = 'flickr.interestingness.getList';
+        const method_search = 'flickr.photos.search'
+        let url = '';
+        if (opt.type === 'interest') {
+            url = `https://www.flickr.com/services/rest/?method=${method_interest}&api_key=${key}&per_page=${opt.count}&format=json&nojsoncallback=1`;
+        }
+        if (opt.type === 'search') {
+            url = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${opt.count}&tags=${opt.tags}&format=json&nojsoncallback=1`;
+        }
+
         await axios.get(url).then(json => {
             console.log(json.data.photos.photo);
             setItems(json.data.photos.photo)
@@ -33,7 +36,7 @@ function Gallery() {
 
     }
     useEffect(() => {
-        getFlickr(url_search)
+        getFlickr({ type: 'interest', count: 50 })
     }, []); //함수라서 arrow다시 랩핑 안해도 됨
 
     // per.page  몇개
@@ -43,20 +46,14 @@ function Gallery() {
                 if (!EnableClick) return;
                 setLoading(true);
                 frame.current.classList.remove('on');
-                getFlickr(url_interest);
+                getFlickr({ type: 'interest', count: 50 });
                 setEnableClick(false);
             }}>Interest Gallery</button>
-            <button onClick={() => {
-                if (!EnableClick) return;
-                setLoading(true);
-                frame.current.classList.remove('on');
-                getFlickr(url_search);
-                setEnableClick(false);
-            }}>Search Gallery</button>
 
-            {
-                Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />
-            }
+            {/* 검색 */}
+
+            {/* 로딩이미지 */}
+            {Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />}
 
             <article ref={frame}>
                 <Masonry elementType={'ul'} options={masonryOption}>
