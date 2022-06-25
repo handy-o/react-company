@@ -5,6 +5,7 @@ import Masonry from 'react-masonry-component'
 
 function Gallery() {
     const frame = useRef(null);
+    const input = useRef(null);
     const [Items, setItems] = useState([]);
     const [Loading, setLoading] = useState(true);
     const [EnableClick, setEnableClick] = useState(false)
@@ -37,9 +38,8 @@ function Gallery() {
     }
     useEffect(() => {
         getFlickr({ type: 'interest', count: 50 })
-    }, []); //함수라서 arrow다시 랩핑 안해도 됨
+    }, []);
 
-    // per.page  몇개
     return (
         <Layout name={'Gallery'}>
             <button onClick={() => {
@@ -51,6 +51,22 @@ function Gallery() {
             }}>Interest Gallery</button>
 
             {/* 검색 */}
+            <div className="searchBox">
+                <input type="text" ref={input} />
+                <button onClick={() => {
+                    if (!EnableClick) return;
+                    setEnableClick(false);
+                    setLoading(true);
+                    frame.current.classList.remove('on');
+
+                    const result = input.current.value; // 검색입력
+                    getFlickr({
+                        type: 'search',
+                        count: 50,
+                        tags: result    // 검색어 넣기
+                    })
+                }}>Search</button>
+            </div>
 
             {/* 로딩이미지 */}
             {Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />}
