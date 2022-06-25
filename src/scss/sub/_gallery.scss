@@ -61,5 +61,22 @@
             }
         }
     }
+}
 
+@media screen and (max-width:1179px) {
+    .Gallery article ul li {
+        width: 33.3333%;
+    }
+}
+
+@media screen and (max-width:779) {
+    .Gallery article ul li {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:639px) {
+    .Gallery article ul li {
+        width: 100%;
+    }
 }
