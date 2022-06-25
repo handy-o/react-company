@@ -27,8 +27,14 @@ function Gallery() {
     // per.page  몇개
     return (
         <Layout name={'Gallery'}>
-            <button>Interest Gallery</button>
-            <button>Search Gallery</button>
+            <button onClick={() => {
+                frame.current.classList.remove('on');
+                getFlickr(url_interest)
+            }}>Interest Gallery</button>
+            <button onClick={() => {
+                frame.current.classList.remove('on');
+                getFlickr(url_search)
+            }}>Search Gallery</button>
             <ul ref={frame}>
                 {Items.map((item) => {
                     return (
