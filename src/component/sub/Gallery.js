@@ -74,9 +74,19 @@ function Gallery() {
 
             {/* 검색 */}
             <div className="searchBox">
-                <input type="text" ref={input} />
+                <input type="text" ref={input} onKeyUp={e => {
+                    if (e.key === 'Enter') { // console.log찍어보면 key와 keyCode 값을 알 수 있음
+                        showSearch();
+                    }
+                }} />
                 <button onClick={showSearch}>Search</button>
             </div>
+            {/* 
+            키보드를 눌렀을 때
+            keyDown : 누르는 순간
+            keyUp : 눌렀다가 떼는 순간 (* 실무에서 가장 많이 씀)
+            keyPress : 영문키보드에 최적화되어 한글/특수문자같은 것 인식이 안되는 문제
+            */}
 
             {/* 로딩이미지 */}
             {Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />}
@@ -98,6 +108,8 @@ function Gallery() {
                     })}
                 </Masonry>
             </article>
+
+            <h3>검색 결과가 없습니다.</h3>
 
         </Layout>
     )
