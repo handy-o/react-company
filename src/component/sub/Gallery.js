@@ -2,8 +2,14 @@ import axios from 'axios'
 import Layout from "../common/Layout"
 import { useEffect, useState, useRef } from 'react'
 import Masonry from 'react-masonry-component'
+import Popup from "../common/Popup";
+
 
 function Gallery() {
+    // 팝업
+    const pop = useRef(null);
+    const [Index, setIndex] = useState(0);
+
     const frame = useRef(null);
     const input = useRef(null);
     const [Items, setItems] = useState([]);
@@ -73,65 +79,85 @@ function Gallery() {
         getFlickr({ type: 'user', count: 50, user: '195938691@N04', })
     }, []);
 
-    return (
-        <Layout name={'Gallery'}>
-            <button onClick={showInterest}>Interest Gallery</button>
+    // 팝업
+    const handlePopup = () => {
+        pop.current.open();
+    }
 
-            {/* 검색 */}
-            <div className="searchBox">
-                <input type="text" ref={input} onKeyUp={e => {
-                    if (e.key === 'Enter') { // console.log찍어보면 key와 keyCode 값을 알 수 있음
-                        showSearch();
-                    }
-                }} />
-                <button onClick={showSearch}>Search</button>
-            </div>
-            {/* 
+    return (
+        <>
+            <Layout name={'Gallery'}>
+                <button onClick={showInterest}>Interest Gallery</button>
+
+                {/* 검색 */}
+                <div className="searchBox">
+                    <input type="text" ref={input} onKeyUp={e => {
+                        if (e.key === 'Enter') { // console.log찍어보면 key와 keyCode 값을 알 수 있음
+                            showSearch();
+                        }
+                    }} />
+                    <button onClick={showSearch}>Search</button>
+                </div>
+                {/* 
             키보드를 눌렀을 때
             keyDown : 누르는 순간
             keyUp : 눌렀다가 떼는 순간 (* 실무에서 가장 많이 씀)
             keyPress : 영문키보드에 최적화되어 한글/특수문자같은 것 인식이 안되는 문제
             */}
 
-            {/* 로딩이미지 */}
-            {Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />}
+                {/* 로딩이미지 */}
+                {Loading && <img className='loading' src={process.env.PUBLIC_URL + '/img/loading.gif'} />}
 
-            <article ref={frame}>
-                <Masonry elementType={'ul'} options={masonryOption}>
-                    {Items.map((item) => {
-                        return (
-                            <li key={item.id}>
-                                <div className="inner">
-                                    <div className="pic">
-                                        <img src={`https://live.staticflickr.com/${item.server
-                                            }/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
+                <article ref={frame}>
+                    <Masonry elementType={'ul'} options={masonryOption}>
+                        {Items.map((item, idx) => {
+                            return (
+                                <li key={item.id}>
+                                    <div className="inner">
+                                        <div className="pic"
+                                            onClick={() => {
+                                                setIndex(idx);
+                                                pop.current.open();
+                                            }}>
+                                            <img src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+                                                alt={item.title} />
+                                        </div>
+                                        <h2>{item.title}</h2>
+
+                                        <div className="profile">
+                                            <img
+                                                src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+                                                alt={item.owner}
+                                                onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
+                                            <span
+                                                onClick={(e) => {
+                                                    if (!EnableClick) return;
+                                                    setEnableClick(false);
+                                                    frame.current.classList.remove('on');
+                                                    getFlickr({
+                                                        type: 'user',
+                                                        count: 50,
+                                                        user: e.target.innerText,
+                                                    });
+                                                }}
+                                            >{item.owner}</span>
+                                        </div>
                                     </div>
-                                    <h2>{item.title}</h2>
-                                    <div className="profile">
-                                        <img
-                                            src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
-                                            alt={item.owner}
-                                            onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
-                                        <span
-                                            onClick={(e) => {
-                                                if (!EnableClick) return;
-                                                setEnableClick(false);
-                                                frame.current.classList.remove('on');
-                                                getFlickr({
-                                                    type: 'user',
-                                                    count: 50,
-                                                    user: e.target.innerText,
-                                                });
-                                            }}
-                                        >{item.owner}</span>
-                                    </div>
-                                </div>
-                            </li>
-                        )
-                    })}
-                </Masonry>
-            </article>
-        </Layout>
+                                </li>
+                            )
+                        })}
+                    </Masonry>
+                </article>
+            </Layout>
+            <Popup ref={pop}>
+                {Items.length !== 0 && (
+                    <img
+                        src={`https://live.staticflickr.com/${Items[Index].server}/${Items[Index].id}_${Items[Index].secret}_b.jpg`}
+                        alt={Items[Index].title}
+                    />
+                )}
+            </Popup>
+        </>
     )
 }
 
