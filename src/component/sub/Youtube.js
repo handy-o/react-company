@@ -1,11 +1,12 @@
 import Layout from "../common/Layout"
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import axios from "axios"; // 비동기로 정보 가져옴
 import Popup from "../common/Popup";
 
 function Youtube() {
+    const pop = useRef(null);
     const [Vids, setVids] = useState([]);
-    const [Open, setOpen] = useState(false); // 팝업
+
     const [Index, setIndex] = useState(0); // 유튜브 순서
 
     const FetchYoutube = () => {
@@ -23,8 +24,8 @@ function Youtube() {
 
     // 팝업
     const handlePopup = (index) => {
-        setOpen(true);
-        setIndex(index)
+        setIndex(index);
+        pop.current.open();
     }
 
     return (
@@ -57,12 +58,16 @@ function Youtube() {
                 }
             </Layout>
 
-            {/* {Open ? <Popup setOpen={setOpen} /> : null} 아래와 동일 */}
-            {Open && (
-                <Popup setOpen={setOpen}>
-                    <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameborder="0"></iframe>
-                </Popup>
-            )}
+            {/* common > popup.js에서 수정되었기 때문에 3항 사용 x */}
+            <Popup ref={pop}>
+                {Vids.length !== 0 && (
+                    <iframe
+                        src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`}
+                        frameborder="0">
+                    </iframe>
+                )}
+            </Popup>
+
 
         </>
     )
