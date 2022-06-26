@@ -56,6 +56,28 @@
                         margin-bottom: 20px;
 
                     }
+
+                    .profile {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 36px;
+                            border-radius: 50%;
+                            margin-right: 10px;
+                        }
+
+                        span {
+                            cursor: pointer;
+                            font: 12px/1 'arial';
+                            color: rgb(205, 55, 0);
+                            transition: 0.5s;
+
+                            &:hover {
+                                color: aqua;
+                            }
+                        }
+                    }
                 }
 
             }

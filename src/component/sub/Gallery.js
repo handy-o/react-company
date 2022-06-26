@@ -16,7 +16,8 @@ function Gallery() {
     const getFlickr = async (opt) => {
         const key = '418715e184dbd270f5ea19ff1fa3672f';
         const method_interest = 'flickr.interestingness.getList';
-        const method_search = 'flickr.photos.search'
+        const method_search = 'flickr.photos.search';
+        const method_user = 'flickr.people.getPhotos';
         let url = '';
         if (opt.type === 'interest') {
             url = `https://www.flickr.com/services/rest/?method=${method_interest}&api_key=${key}&per_page=${opt.count}&format=json&nojsoncallback=1`;
@@ -24,9 +25,12 @@ function Gallery() {
         if (opt.type === 'search') {
             url = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${opt.count}&tags=${opt.tags}&format=json&nojsoncallback=1`;
         }
+        if (opt.type === 'user')
+            url = `https://www.flickr.com/services/rest/?method=${method_user}&api_key=${key}&per_page=${opt.count}&user_id=${opt.user}&format=json&nojsoncallback=1`;
 
         await axios.get(url).then(json => {
             console.log(json.data.photos.photo);
+            if (json.data.photos.photo.length === 0) return alert('검색하신 결과값이 없습니다.')
             setItems(json.data.photos.photo)
         })
         setTimeout(() => {
@@ -64,8 +68,9 @@ function Gallery() {
         input.current.value = '';
     }
 
+    //처음 로드 시 사용
     useEffect(() => {
-        getFlickr({ type: 'interest', count: 50 })
+        getFlickr({ type: 'user', count: 50, user: '195938691@N04', })
     }, []);
 
     return (
@@ -102,15 +107,30 @@ function Gallery() {
                                             }/${item.id}_${item.secret}_m.jpg`} alt={item.title} />
                                     </div>
                                     <h2>{item.title}</h2>
+                                    <div className="profile">
+                                        <img
+                                            src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+                                            alt={item.owner}
+                                            onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
+                                        <span
+                                            onClick={(e) => {
+                                                if (!EnableClick) return;
+                                                setEnableClick(false);
+                                                frame.current.classList.remove('on');
+                                                getFlickr({
+                                                    type: 'user',
+                                                    count: 50,
+                                                    user: e.target.innerText,
+                                                });
+                                            }}
+                                        >{item.owner}</span>
+                                    </div>
                                 </div>
                             </li>
                         )
                     })}
                 </Masonry>
             </article>
-
-            <h3>검색 결과가 없습니다.</h3>
-
         </Layout>
     )
 }
