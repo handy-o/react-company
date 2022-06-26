@@ -1,18 +1,8 @@
 import { forwardRef, useImperativeHandle, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-// 1단계 - 기존 컴포넌트 함수를 대입형(화살표)함수로 변경
-// 2단계 - 해당(화살표) 컴포넌트 함수를 forwradRef()의 콜백으로 전달
-// 3단계 - 콜백으로 전달한 함수의 두번째 파라미터로 ref를 추가
-
-/*
-    기본적으로 react는 단방향 데이터 바인딩 (부모->자식)
-    자식에서 부모로 데이터를 전달하려면 부모에서 자식 컴포넌트를 useRef로 참조
-    자식에서 리턴되는 값이 있어야 부모에서 자식 컴포넌트를 참조가능
-    이때 필요한 것이? forwardRef
-    fowardRef()는 자식 JSX요소를 ref에 담아서 부모요소로 리턴가능
-    만약 내보낼 값이 JSX가 아닌 특정 커스텀 객체일 때는 useImperativeHandle을 사용해야 함
-    사용방법은 위 단계를 거침
-*/
+// motion - 모션처리 객체 설정
+// animatepresence - 컴포넌트가 끝날 떄 (unmount) 모션이 되도록 지연시켜줌
 
 const Popup = forwardRef((props, ref) => {
     const [Open, setOpen] = useState(false); // 초기값은 안보여야하니 false
@@ -23,17 +13,29 @@ const Popup = forwardRef((props, ref) => {
     })
 
     return (
-        <>
+        <AnimatePresence>
             {Open && ( // Open state가 true일 때 
-                <aside className="pop">
-                    <div className="con">
+                <motion.aside className="pop"
+                    initial={{ opacity: 0, scale: 0 }} //초기 
+                    animate={{ opacity: 1, scale: 1, transition: { duration: 0.5 } }} // 모션될 때 
+                    exit={{ opacity: 0, scale: 1, transition: { duration: 0.5, delay: 1 } }}    // 사라질 때 
+                >
+                    <motion.div className="con"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.5 } }}
+                        exit={{ opacity: 0, transition: { duration: 0.5, delay: 0.5 } }}
+                    >
                         {props.children}
-                        <span className="close"
-                            onClick={() => setOpen(false)}>Close</span>
-                    </div>
-                </aside>
+                        <motion.span className="close"
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0, transition: { duration: 0.5, delay: 1 } }}
+                            exit={{ opacity: 0, x: 50 }}
+                            onClick={() => setOpen(false)}>Close
+                        </motion.span>
+                    </motion.div>
+                </motion.aside>
             )}
-        </>
+        </AnimatePresence>
     )
 })
 
