@@ -14,3 +14,10 @@ export const setMembers = (member) => {
         payload: member, // member라는 파라미터로 저장
     }
 }
+
+export const setYoutube = (data) => {
+    return {
+        type: 'SET_YOUTUBE',
+        payload: data,
+    };
+};

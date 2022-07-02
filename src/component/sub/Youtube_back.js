@@ -1,30 +1,26 @@
-import Layout from '../common/Layout';
-import { useEffect, useState, useRef } from 'react';
-import axios from 'axios'; // 비동기로 정보 가져옴
-import Popup from '../common/Popup';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setYoutube } from '../../redux/action';
+import Layout from "../common/Layout"
+import { useEffect, useState, useRef } from 'react'
+import axios from "axios"; // 비동기로 정보 가져옴
+import Popup from "../common/Popup";
 
 function Youtube() {
-    const dispatch = useDispatch();
-    const Vids = useSelector((store) => store.youtubeReducer.youtube); //처음에 빈배열담김
     const pop = useRef(null);
+    const [Vids, setVids] = useState([]);
 
     const [Index, setIndex] = useState(0); // 유튜브 순서
 
-    const fetchYoutube = async () => {
-        const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
-        const playlist = 'PLHtvRFLN5v-W-izd7V4JH2L4-RTW0WRi3';
-        const num = 8;
+    const FetchYoutube = () => {
+        const key = 'AIzaSyD4taSlH00Ul7_XuoRrweLcAZNS-gn080Q';
+        const playlist = 'PLcFzhbItLOvYk5e0s4C2eFiO1iiC7hw-Y';
+        const num = 5;
         const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 
-        await axios.get(url).then((json) => {
-            dispatch(setYoutube(json.data.items));
-            // {type: 'SET_YOUTUBE', payload: json.data.items}
+        axios.get(url).then((json) => {
+            console.log(json.data.items);
+            setVids(json.data.items)
         });
-    };
-    useEffect(fetchYoutube, [])
+    }
+    useEffect(FetchYoutube, [])
 
     // 팝업
     const handlePopup = (index) => {
