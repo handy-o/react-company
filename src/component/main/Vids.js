@@ -1,10 +1,10 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper'
 import { useRef, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { useSelector } from 'react-redux'
 
 function Vids() {
     const { youtube } = useSelector((store) => store.youtubeReducer)
