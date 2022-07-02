@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function News() {
+    const { members } = useSelector(store => store.memberReducer);
     // 미션 - 
     // 메인의 NEWS 컴포넌트에 커뮤니티 페이지에 있는
     // 최근 게시글 4개를 이곳에 출력
@@ -32,6 +34,21 @@ function News() {
 
     return (
         <section id="news" className='myScroll'>
+            <ul>
+                {
+                    members.map((member, idx) => {
+                        if (idx < 2) {
+                            return (
+                                <li key={member.name}>
+                                    <div className="pic">
+                                        <img src={`${process.env.PUBLIC_URL}/img/${member.pic}`} alt={member.name} />
+                                    </div>
+                                </li>
+                            )
+                        }
+                    })
+                }
+            </ul>
             {Posts.map((post, idx) => {
                 if (idx < 4) {
                     return (
