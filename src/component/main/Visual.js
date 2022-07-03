@@ -2,7 +2,7 @@ import Anime from '../../asset/anim.js';
 import { useRef, useState } from 'react';
 
 function Visual() {
-    console.log('visual');
+    //console.log('visual');
     const panel = useRef(null);
     const navi = useRef(null);
     const Index = useRef(0);

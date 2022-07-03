@@ -13,6 +13,50 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+
+  <script>
+    /*
+    Generator
+    Wrapping 함수 안쪽에서 복수개의 함수들을 순차적으로 호출하면서 여러개의 리턴값을 반환하는 함수
+
+    사용방법
+    - Wrapping 함수의 function문 뒤에 '*' 추가
+    - 그 안쪽의 자식함수 호출문 앞에 yield문 추가
+    - 해당 wrapping함수를 리턴값으로 iterable객체를 반환(반복가능한 객체)
+    - 반환된 iterable객체에 .next()메서드를 이용해서 순차적으로 호출 가능
+    */
+    function test1() {
+      console.log('test1');
+      return 'test1';
+    }
+    function test2() {
+      console.log('test2');
+      return 'test2';
+    }
+    function test3() {
+      console.log('test3');
+      return 'test3';
+    }
+
+    function* generator() {
+      yield test1();
+      yield test2();
+      yield test3();
+    }
+
+    const result = generator();
+    const a = result.next();
+    console.log(a);
+
+    const b = result.next();
+    console.log(b);
+
+    const c = result.next();
+    console.log(c);
+
+    const d = result.next();
+    console.log(d);
+  </script>
 </body>
 
 </html>
