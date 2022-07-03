@@ -68,7 +68,19 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
     }
 };
 
-const reducers = combineReducers({ memberReducer, youtubeReducer });
+const flickerReducer = (state = { flickr: [] }, action) => {
+    switch (action.type) {
+        case 'FLICKR_START':  // 복사
+            return { ...state }
+
+        case 'FLICER_SUCCESS':
+            return { ...state, flickr: action.payload }
+        default:
+            return state;
+    }
+}
+
+const reducers = combineReducers({ memberReducer, youtubeReducer, flickerReducer });
 
 
 // 내보내기
