@@ -12,7 +12,8 @@ function Vids() {
     const frame = useRef(null);
     let isCursor = false;
     const mouseMove = e => {
-        if (!isCursor) return;
+        if (!isCursor) return cursor.current.style.display = 'none';
+
         cursor.current.style.left = e.clientX + 'px';
         cursor.current.style.top = e.clientY + 'px';
     }

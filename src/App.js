@@ -16,8 +16,8 @@ import Join from './component/sub/Join';
 import axios from 'axios';
 import { Route, Switch } from 'react-router-dom'
 import { useEffect } from 'react';
-import { setYoutube } from './redux/action';
 import { useDispatch } from 'react-redux';
+import { setYoutube, setMembers } from './redux/action';
 
 
 //scss
@@ -36,7 +36,17 @@ function App() {
 			// {type: 'SET_YOUTUBE', payload: json.data.items}
 		});
 	};
-	useEffect(fetchYoutube, [])
+
+	const path = process.env.PUBLIC_URL;
+	const fetchMember = async () => {
+		await axios.get(`${path}/DB/member.json`).then(json => {
+			dispatch(setMembers(json.data.members));
+		})
+	};
+	useEffect(() => { // 여러 함수 호출하려고 랩핑함수
+		fetchYoutube();
+		fetchMember();
+	}, [])
 
 	return (
 		<>

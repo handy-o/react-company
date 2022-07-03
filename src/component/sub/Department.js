@@ -1,11 +1,13 @@
 import Layout from "../common/Layout"
+import { useEffect } from "react";
 import { useSelector } from 'react-redux';
 
 const path = process.env.PUBLIC_URL;
 
 function Department() {
-    //const members = useSelector((store) => store.memberReducer.members);
-    const { members } = useSelector((store) => store.memberReducer);
+    const members = useSelector((store) => store.memberReducer.members);
+    //const { members } = useSelector((store) => store.memberReducer);
+
 
     return (
         <Layout name={'Department'}>
