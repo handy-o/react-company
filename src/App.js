@@ -14,14 +14,13 @@ import Location from './component/sub/Location';
 import Join from './component/sub/Join';
 
 import axios from 'axios';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setYoutube, setMembers } from './redux/action';
 
-
 //scss
-import './scss/style.scss'
+import './scss/style.scss';
 
 function App() {
 	const dispatch = useDispatch();
@@ -39,21 +38,22 @@ function App() {
 
 	const path = process.env.PUBLIC_URL;
 	const fetchMember = async () => {
-		await axios.get(`${path}/DB/member.json`).then(json => {
+		await axios.get(`${path}/DB/member.json`).then((json) => {
 			dispatch(setMembers(json.data.members));
-		})
+		});
 	};
-	useEffect(() => { // 여러 함수 호출하려고 랩핑함수
+	useEffect(() => {
+		// 여러 함수 호출하려고 랩핑함수
 		fetchYoutube();
 		fetchMember();
-	}, [])
+	}, []);
 
 	return (
 		<>
 			<Switch>
-				<Route exact path="/" component={Main} />	{/* exact 쓰지 않으면 다른 경로에서 모두 '/' 를 포함하기 때문에 아래 컴포넌트들이 모두 화면에 표시됨 */}
-
-				<Route path="/" render={() => <Header type={'sub'} />} />
+				<Route exact path='/' component={Main} />{' '}
+				{/* exact 쓰지 않으면 다른 경로에서 모두 '/' 를 포함하기 때문에 아래 컴포넌트들이 모두 화면에 표시됨 */}
+				<Route path='/' render={() => <Header type={'sub'} />} />
 			</Switch>
 
 			{/* 
