@@ -10,34 +10,51 @@ function Gallery() {
 	const frame = useRef(null);
 	const pop = useRef(null);
 	const [EnableClick, setEnableClick] = useState(false);
+	const [Loading, setLoading] = useState(true);
 	const [Index, setIndex] = useState(0);
 	const [Opt, setOpt] = useState({
 		type: 'user',
 		count: 50,
 		user: '195938691@N04',
 	});
-	const masonryOption = {
-		transitionDuration: '0.5s',
-	};
+	const masonryOption = { transitionDuration: '0.5s' };
 
-	const [Loading, setLoading] = useState(true);
 	const endLoading = () => {
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
+			setTimeout(() => setEnableClick(true), 1000);
 		}, 1000);
 	};
 	useEffect(() => {
-		frame.current.classList.add('on');
 		dispatch({ type: 'FLICKR_START', Opt });
 	}, [Opt]);
 
 	// 전역스토어로부터 flickr 데이터가 받아져서 Items값이 변경되면, endLoading함수 호출해서 로딩바 숨기고 화면에 데이터 출력
 	useEffect(endLoading, [Items]);
 
+	const showInterest = () => {
+		if (!EnableClick) return; //아직 로딩중이니깐 끝내
+		setLoading(true);
+		frame.current.classList.remove('on'); // 다시 프레임이 안보이고 로딩바가 보이게
+		setOpt({ type: 'interest', count: 50 });
+	};
+
+	const showUser = (e) => {
+		if (!EnableClick) return;
+		let user = e.target.innerText;
+		if (user === 'Show Mine') user = '195938691@N04';
+		setLoading(true);
+		frame.current.classList.remove('on');
+		setOpt({ type: 'user', count: 50, user: user });
+	};
+
 	return (
 		<>
 			<Layout name={'Gallery'}>
+				<button onClick={showInterest}>Show Interest</button>
+				<button onClick={showUser}>Show Mine</button>
+
 				{Loading && (
 					<img
 						className='loading'
@@ -73,7 +90,7 @@ function Gallery() {
 													)
 												}
 											/>
-											<span>{item.owner}</span>
+											<span onClick={showUser}>{item.owner}</span>
 										</div>
 									</div>
 								</li>
