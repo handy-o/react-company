@@ -9,6 +9,7 @@ function Gallery() {
 	const dispatch = useDispatch();
 	const frame = useRef(null);
 	const pop = useRef(null);
+	const input = useRef(null);
 	const [EnableClick, setEnableClick] = useState(false);
 	const [Loading, setLoading] = useState(true);
 	const [Index, setIndex] = useState(0);
@@ -49,11 +50,37 @@ function Gallery() {
 		setOpt({ type: 'user', count: 50, user: user });
 	};
 
+	const showSearch = (e) => {
+		if (!EnableClick) return;
+		const tag = input.current.value.trim();
+		input.current.value = '';
+		if (!tag) return alert('검색어를 입력하세요');
+		setLoading(true);
+		frame.current.classList.remove('on');
+		setOpt({
+			type: 'search',
+			count: 50,
+			tags: tag,
+		});
+	};
+
 	return (
 		<>
 			<Layout name={'Gallery'}>
 				<button onClick={showInterest}>Show Interest</button>
 				<button onClick={showUser}>Show Mine</button>
+
+				<div className='searchBox'>
+					<input
+						type='text'
+						ref={input}
+						placeholder='검색어를 입력하세요'
+						onKeyUp={(e) => {
+							if (e.key === 'Enter') showSearch();
+						}}
+					/>
+					<button onClick={showSearch}>SEARCH</button>
+				</div>
 
 				{Loading && (
 					<img
