@@ -55,5 +55,5 @@ export function* returnYoutube() {
 
 //reducer에 적용될 rootSaga생성함수
 export default function* rootSaga() {
-	yield all([fork(callFlickr), fork(callMember)]);
+	yield all([fork(callFlickr), fork(callMember), fork(callYoutube)]);
 }
