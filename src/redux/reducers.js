@@ -17,8 +17,13 @@ const memberReducer = (state = { members: [] }, action) => {
 
 const youtubeReducer = (state = { youtube: [] }, action) => {
 	switch (action.type) {
-		case 'SET_YOUTUBE':
+		case 'YOUTUBE_START':
+			return { ...state };
+		case 'YOUTUBE_SUCCESS':
 			return { ...state, youtube: action.payload };
+		case 'YOUTUBE_ERROR':
+			return { ...state, youtube: action.payload };
+
 		default:
 			return state;
 	}

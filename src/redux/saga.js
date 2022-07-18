@@ -1,5 +1,5 @@
 import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
-import { fetchFlickr, fetchMember } from './api';
+import { fetchFlickr, fetchMember, fetchYoutube } from './api';
 
 /*
     takeLatest : 액션 요청이 여러번 들엉면 제일 최근요청 하나만 실행 (takeEvery: 들어오는 요청 모두처리)
@@ -37,6 +37,19 @@ export function* returnMember() {
 		yield put({ type: 'MEMBER_SUCCESS', payload: response.data.members });
 	} catch (err) {
 		yield put({ type: 'MEMBER_ERROR', payload: err });
+	}
+}
+
+// youtube saga
+export function* callYoutube() {
+	yield takeLatest('YOUTUBE_START', returnYoutube);
+}
+export function* returnYoutube() {
+	try {
+		const response = yield call(fetchYoutube);
+		yield put({ type: 'YOUTUBE_SUCCESS', payload: response.data.items });
+	} catch (err) {
+		yield put({ type: 'YOUTUBE_ERROR', payload: err });
 	}
 }
 
