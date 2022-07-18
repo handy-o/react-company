@@ -7,12 +7,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>React App</title>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9d4a287cba5e05d44b6d22c73b72a89"></script>
+  <style>
+    .default {
+      position: absolute;
+      top: -99999px;
+    }
 
+    .mask {
+      width: 100%;
+      height: 100vh;
+      background: #111;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      opacity: 1;
+      transition: opacity 2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font: 18px/1 'arial';
+      color: #fff;
+    }
+
+    .mask.off {
+      opacity: 0;
+    }
+  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <div class="default"></div>
+  <div class="mask">LOADING...</div>
+
+  <script>
+    const baseURL = 'https://react2205weekend.github.io/react_may';
+    const imgs = [
+      baseURL + '/img/Community.jpg',
+      baseURL + '/img/Department.jpg',
+      baseURL + '/img/Gallery.jpg',
+      baseURL + '/img/Join.jpg',
+      baseURL + '/img/Location.jpg',
+      baseURL + '/img/Youtube.jpg',
+    ];
+
+    const vids = [
+      baseURL + '/img/vid1.mp4',
+      baseURL + '/img/vid2.mp4',
+    ];
+
+    const lenImg = imgs.length;
+    const lenVid = vids.length;
+
+    const defaults = document.querySelector('.default');
+    const mask = document.querySelector('.mask');
+    let tags = '';
+
+    //DOM생성
+    createDOM();
+
+    //Promise.all()로 loadImg, loadVid 함수가 모두 프로미스객체를 반활할때까지 기다리면서 동기화처리
+    Promise.all([loadImg(), loadVid()]).then(result => {
+      //각 함수의 리턴값을 비구조화할당으로 변수에 각각저장
+      console.log(result);
+
+      //두개의 값이 모두 true면 (모든 DOM소스가 로딩완료되면)
+      if (loadImg && loadVid) {
+        console.log('mask-hide');
+        mask.classList.add('off');
+
+        setTimeout(() => {
+          mask.remove();
+          defaults.remove();
+        }, 2000)
+      }
+    })
+
+    //DOM생성함수
+    function createDOM() {
+      imgs.forEach(src => {
+        tags += `<img src=${src} />`
+      })
+      vids.forEach(src => {
+        tags += `<video src=${src}></video>`
+      })
+      defaults.innerHTML = tags;
+    }
+
+    //이미지소스가 모두 로딩되면 프로미스객체로 true반환 함수
+    function loadImg() {
+      return new Promise((res, rej) => {
+        let countImg = 0;
+        const imgDOM = defaults.querySelectorAll('img');
+
+        imgDOM.forEach(img => {
+          img.onload = () => {
+            countImg++;
+            console.log('img loaded', countImg);
+            if (countImg === lenImg) {
+              res(true);
+            }
+          }
+        })
+      })
+    }
+
+    //영상소스가 모두 로딩되면 프로미스로 객체로 true반환 함수
+    function loadVid() {
+      return new Promise((res, rej) => {
+        let countVid = 0;
+        const vidDOM = defaults.querySelectorAll('video');
+
+        vidDOM.forEach(vid => {
+          vid.onloadeddata = () => {
+            countVid++;
+            console.log('video loaded', countVid);
+            if (countVid === lenVid) {
+              res(true)
+            }
+          }
+        })
+      })
+    }
+  </script>
 
   <script>
     /*
@@ -60,3 +179,11 @@
 </body>
 
 </html>
+
+<!-- 
+  - 미리 캐싱처리가 되어야하는 고해상도 이미지, 영상소스 url을 배열로 준비
+  - react가 아닌 index.html에서 defaults라는 프레임 안에 배열에 있는 이미지, 영상을 동적으로 강제 DOM 생성
+  - DOM이 생성되면서 수반되는 영상, 소스이미지가 브라우저에 캐싱되는 동안 mask화면 보여줌
+  - 모든 영상, 이미지소스가 캐싱완료되면 마스크와 강제로 만들어진 DOM 프레임인dafaults를 모두 제거
+  - 그 사이 React컴포넌트 파일들이 모든 리얼돔으로 변환되서 화면에 출력됨
+ -->
