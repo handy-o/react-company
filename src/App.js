@@ -17,7 +17,7 @@ import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube, setMembers } from './redux/action';
+import { setYoutube } from './redux/action';
 
 //scss
 import './scss/style.scss';
@@ -36,22 +36,16 @@ function App() {
 		});
 	};
 
-	const path = process.env.PUBLIC_URL;
-	const fetchMember = async () => {
-		await axios.get(`${path}/DB/member.json`).then((json) => {
-			dispatch(setMembers(json.data.members));
-		});
-	};
 	useEffect(() => {
 		// 여러 함수 호출하려고 랩핑함수
 		fetchYoutube();
-		fetchMember();
 		// 처음App 컴포넌트 구동 시 개인계정의 데이터옵션을 saga로 액션객체에 담아보냄
 		// saga-> reducer -> store -> index를 거쳐 어떤 컴포넌트에서든 useSelector Flickr데이터 접근가능
 		dispatch({
 			type: 'FLICKR_START',
 			Opt: { type: 'user', count: 50, user: '195938691@N04' },
 		});
+		dispatch({ type: 'MEMBER_START' });
 	}, []);
 
 	return (

@@ -1,5 +1,5 @@
 import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
-import { fetchFlickr } from './api';
+import { fetchFlickr, fetchMember } from './api';
 
 /*
     takeLatest : 액션 요청이 여러번 들엉면 제일 최근요청 하나만 실행 (takeEvery: 들어오는 요청 모두처리)
@@ -27,7 +27,20 @@ export function* returnFlickr(action) {
 	}
 }
 
+// member saga
+export function* callMember() {
+	yield takeLatest('MEMBER_START', returnMember);
+}
+export function* returnMember() {
+	try {
+		const response = yield call(fetchMember);
+		yield put({ type: 'MEMBER_SUCCESS', payload: response.data.members });
+	} catch (err) {
+		yield put({ type: 'MEMBER_ERROR', payload: err });
+	}
+}
+
 //reducer에 적용될 rootSaga생성함수
 export default function* rootSaga() {
-	yield all([fork(callFlickr)]);
+	yield all([fork(callFlickr), fork(callMember)]);
 }
