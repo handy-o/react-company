@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Work+Sans:wght@100&display=swap');
 
-$tablet : 1179px;
-$mp : 539px;
-
+$tablet: 1179px;
+$mp: 539px;
 
 //common
 @import 'common/reset';
@@ -10,8 +9,7 @@ $mp : 539px;
 @import 'common/footer';
 @import 'common/layout';
 @import 'common/popup';
-
-
+@import 'common/menu';
 
 //main
 @import 'main/visual';

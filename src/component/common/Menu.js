@@ -1,26 +1,28 @@
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import Menu from './Menu';
-import { useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 
-function Header(props) {
-	const menu = useRef(null);
-	const active = { color: 'tomato' };
-	const active2 = { color: '#fff' };
+const Menu = forwardRef((props, ref) => {
+	const [Open, setOpen] = useState(false);
+	const active = { color: 'aqua' };
+
+	useImperativeHandle(ref, () => {
+		return {
+			toggle: () => setOpen(!Open),
+		};
+	});
+
 	return (
-		<>
-			<header className={props.type}>
-				<div className='inner'>
+		<AnimatePresence>
+			{Open && (
+				<nav id='mobileGnb'>
 					<h1>
-						<NavLink
-							activeStyle={props.type === 'main' ? active2 : active}
-							to='/'>
-							LOGO
+						<NavLink exact to='/'>
+							LAB
 						</NavLink>
 					</h1>
 
-					<ul id='gnb'>
+					<ul>
 						<li>
 							<NavLink activeStyle={active} to='/department'>
 								Department
@@ -52,17 +54,10 @@ function Header(props) {
 							</NavLink>
 						</li>
 					</ul>
-
-					<FontAwesomeIcon
-						icon={faBars}
-						onClick={() => menu.current.toggle()}
-					/>
-				</div>
-			</header>
-
-			<Menu ref={menu} />
-		</>
+				</nav>
+			)}
+		</AnimatePresence>
 	);
-}
+});
 
-export default Header;
+export default Menu;
