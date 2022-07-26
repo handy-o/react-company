@@ -17,6 +17,7 @@ import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import * as types from './redux/actionType';
 
 //scss
 import './scss/style.scss';
@@ -26,11 +27,11 @@ function App() {
 
 	useEffect(() => {
 		dispatch({
-			type: 'FLICKR_START',
+			type: types.FLICKR.start,
 			Opt: { type: 'user', count: 50, user: '195938691@N04' },
 		});
-		dispatch({ type: 'MEMBER_START' });
-		dispatch({ type: 'YOUTUBE_START' });
+		dispatch({ type: types.YOUTUBE.start });
+		dispatch({ type: types.YOUTUBE.start });
 	}, []);
 
 	return (
